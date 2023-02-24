@@ -1,0 +1,92 @@
+.thought {
+    display:flex;
+    background-color:#fff;
+    padding:20px;
+    border-radius:30px;
+    width:40px;
+    height: 10px;
+    position:absolute;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    display: inline-block;
+    top:30px;
+    zoom: 60%;
+}
+
+.thought:before,
+.thought:after {
+    content:"";
+    background-color:#fff;
+    border-radius:50%;
+    display:block;
+    position:absolute;
+}
+
+.thought:before {
+    width:44px;
+    height:44px;
+    top:-12px;
+    left:28px;
+    box-shadow:-50px 30px 0 -12px #fff;
+}
+
+.thought:after {
+    bottom:-10px;
+    right:26px;
+    width:30px;
+    height:30px;
+    box-shadow:40px -34px 0 0 #fff,
+                -28px -6px 0 -2px #fff,
+                -24px 17px 0 -6px #fff,
+                -5px 25px 0 -10px #fff;
+}
+
+/*
+.bubble {
+    position: relative;
+    font-family: sans-serif;
+    line-height: 24px;
+    background: #fff;
+    border-radius: 10px;
+    padding: 24px;
+    text-align: center;
+    color: #333;
+}
+
+.bubble:after {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 50%;
+	width: 0;
+	height: 0;
+	border: 25px solid transparent;
+	border-bottom-color: #fff;
+	border-top: 0;
+	margin-left: -25px;
+	margin-top: -25px;
+}
+*/
+
+.bubble {
+    position: relative;
+    background-color: #fff;
+    border-radius: 1rem;
+    box-shadow: 0 0.125rem 0.5rem rgba(0, 0, 0, .3), 0 0.0625rem 0.125rem rgba(0, 0, 0, .2);
+}
+
+.bubble::before {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 0;
+    bottom: 100%;
+    left: 46%;
+    border: .75rem solid transparent;
+    border-top: none;
+    border-bottom-color: #fff;
+    filter: drop-shadow(0 -0.0625rem 0.0625rem rgba(0, 0, 0, .1));
+}
+
+

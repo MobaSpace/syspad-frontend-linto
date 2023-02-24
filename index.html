@@ -1,0 +1,418 @@
+<!--
+File: Code client SySPAD
+Date: 21/01/2021
+Author: Sergio SOSA-SESMA
+Company: MobaSpace SAS
+-->
+
+<!DOCTYPE HMTL>
+<html lang="fr">
+
+<head>
+    <title>SySPAD</title>
+
+    <meta charset="utf-8">
+    <meta name="author" content="MobaSpace" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="language" content="fr-FR" />
+    <link rel="shortcut icon" type="image/ico" href="/assets/img/favicon/favicon_moba-128x128.ico" />
+    <link rel="shortcut icon" type="image/png" href="/assets/img/favicon/favicon_moba-400x300.png" />
+    <!-- CSS -->
+    <link rel="stylesheet" type="text/css" href="/assets/css/styles.min.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/css/bubble.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/css/style.css" />
+    <!-- SCRIPTS -->
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script type="text/javascript" src="/assets/js/linto.min.js" defer></script>
+    <script type="text/javascript" src="/assets/js/linto_func.js" defer></script>
+    <script type="text/javascript" src="/assets/js/linto_events.js" defer></script>
+    <script type="text/javascript" src="/assets/js/linto_custom_events.js" defer></script>
+    <script src="index.js" type="text/javascript" defer></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var dt = new Date();
+            $('#datetime').text(dt.toDateString())
+
+            /* Thought animation */
+            let text = ''
+            setInterval(() => {
+                text += '.'
+                $('#thought').text(text)
+                if (text == '....')
+                    text = ''
+            }, 500)
+
+            /* Modal */
+            $('#helper').on('click', function () {
+                $('#modal-help').removeClass('hidden').addClass('visible')
+            })
+            $('#modal-help-close').on('click', function () {
+                $('#modal-help').removeClass('visible').addClass('hidden')
+            })
+            $('#info-releve').on('click', function () {
+                $('#modal-releve').removeClass('hidden').addClass('visible-command')
+            })
+            $('#modal-releve-close').on('click', function () {
+                $('#modal-releve').removeClass('visible-command').addClass('hidden')
+            })
+            $('#info-transmission').on('click', function () {
+                $('#modal-transmission').removeClass('hidden').addClass('visible-command')
+            })
+            $('#modal-transmission-close').on('click', function () {
+                $('#modal-transmission').removeClass('visible-command').addClass('hidden')
+            })
+            $('#modal-history-close').on('click', function () {
+                $('#modal-history').removeClass('visible').addClass('hidden')
+            })
+	    $('#modal-tabs-infographie').on('click',function() {
+		$('#modal-tabs-infographie').addClass('active')
+                $('#modal-tabs-video').removeClass('active')
+	    })
+            $('#modal-tabs-video').on('click',function(){
+                $('#modal-tabs-video').addClass('active')
+                $('#modal-tabs-infographie').removeClass('active')
+            })
+        })
+    </script>
+</head>
+
+<body class="scroll">
+
+    <!-- HEADER Bar -->
+    <nav id="header">
+        <div class="flex row header">
+            <div class="flex flex1">
+                <div class="flex row">
+                    <div class="col divIconHeader" >
+                        <div class="centerIconHeader">
+                            <a href="javascript:history.back()">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="currentColor" class="bi bi-arrow-left-circle-fill" viewBox="0 0 16 16" $="">
+                                    <g color="#1B92EA">
+		  	                <path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0zm3.5 7.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5z"></path>							
+                                    </g>
+        	                </svg>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col divIconHeader" style="padding-left: 1vh;">
+                        <div class="centerIconHeader">
+                            <p style="color: #02a194ff">Retour vers SySPAD</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="flex flex1">
+                <a href="javascript:history.back()" class="header-logo"></a>
+            </div>
+            <div class="flex col header-info">
+                <div class="flex row info">
+                    <div class="idSoignant"></div>
+                    <div class="idEhpad"></div>
+                </div>
+                <div id="datetime"></div>
+            </div>
+            <button id="helper" class="flex header-helper"><span class="icon"></span></button>
+        </div>
+    </nav>
+    <!-- HEADER Bar -->
+
+
+    <!-- CONTENT -->
+    <section id="main" class="flex row">
+
+        <!-- INFO COLUMN -->
+        <div class="flex col" id="info">
+            <div class="flex col box info-chambre">
+                <h2>Chambre en cours</h2>
+                <div class="chambre-nombre">NA</div>
+                <div class="chambre-resident"></div>
+            </div> 
+            <div class="flex flex1 col bot-animation">
+                <div class="flex col flex1 bot-container">
+                    <div class="circle bot bot-off" id="bot">
+                        <div class="bot-logo"></div>
+                        <div class="bot-thought hidden" id="thought"></div>
+                    </div>
+                    <div class="bot-msg bubble"><span>Appuyez</span> et <span>maintenez</span> pour parler...</div>
+                </div>
+            </div>
+            <div class="flex row info-button" id="info-releve">
+                <div class="info-logo"></div>
+                <div class="flex flex1">Liste des relevés</div>
+            </div>
+            <div class="flex row info-button" id="info-transmission">
+                <div class="info-logo"></div>
+                <div class="flex flex1">Transmission : liste des cibles</div>
+            </div>
+        </div>
+        <!-- INFO COLUMN -->
+
+
+        <!-- CONTENT COLUMN -->
+        <div class="flex flex1 flex2 col" id="content">
+            <div class="flex flex1 col box">
+                <div class="flex flex1 col scroll current-releves data">
+                    <h2><center> Relevés dictés <p id="NbReleves" style="display:inline">(0)</p> </center></h2>
+                    <div class="values"></div>
+                </div>
+                <div class="flex flex1 col scroll current-transmissions data">
+                    <h2><center>Transmissions dictées <p id="NbTransmissions" style="display:inline">(0)</p></center> </p></h2>
+                    <div class="values"></div>
+                </div>
+            </div>
+        </div>
+        <!-- CONTENT COLUMN -->
+
+        <!-- LAST COLUMN -->
+        <div class="flex col" id="last">
+            <div class="flex flex1 col box scroll history">
+                <h2>Chambres visitées</h2>
+                <div class="flex flex1 col history-rooms" id="history-rooms">
+                </div>
+            </div>
+            <div class="flex flex1 col box scroll streaming-box " id="streaming-box">
+                <h2>Dictée vocale</h2>
+                <p>Utilisez la "Transmission" ou bien le "Commentaire" pour activer la dictée automatique</p>
+                <div id="streaming" class="flex1"></div>
+                <div class="record-mic off" id="record-mic"></div>
+                <div class="record-button" id="stop-transmission">Valider</div>
+            </div>
+        </div>
+        <!-- LAST COLUMN -->
+
+
+
+    </section>
+
+    <!-- modals-->
+    <div id="modal-help" class="flex col hidden scroll">
+        <div class="modal-container flex col">
+	    <div class="modal-header">
+                <h2>Comment utiliser l'interface vocale</h2>
+                <button id="modal-help-close" class="modal__close"><span class="icon"></span></button>
+            </div>
+            <div class="modal-body flex col">
+		<ul>
+		    <a href="#infographie"><li id="modal-tabs-infographie" class="active">Infographie</li></a>
+	            <a href="#video"> <li id="modal-tabs-video">Vidéo</li></a>
+         	</ul>
+          	<div class="tabs">
+                    <div id="video">
+                        <div>
+                            <center>
+				<div style="position:relative;width:fit-content;height:fit-content;">
+           		            <a style="position:absolute;top:20px;right:1rem;opacity:0.8;" href="https://clipchamp.com/watch/LOIOBlspmP7?utm_source=embed&utm_medium=embed&utm_campaign=watch">
+                		        <img style="height:22px;" src="https://clipchamp.com/e.svg" alt="Made with Clipchamp" />
+            			    </a>
+            			    <iframe allowfullscreen style="border:none" src="https://clipchamp.com/watch/LOIOBlspmP7/embed" width="640" height="360"></iframe>
+          		        </div>
+			    </center>
+                        </div>
+                    </div>
+                    <div id="infographie">
+                        <div>
+                           <center><img src="/assets/img/infographics/Infographie.png"/></center>
+                        </div>
+                    </div>
+		</div>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-releve" class="flex col hidden scroll">
+        <div class="modal-container flex col">
+            <div class="modal-header">
+                <h2>La liste de relevés possibles</h2>
+                <button id="modal-releve-close" class="modal__close"><span class="icon"></span></button>
+            </div>
+            <div class="modal-body col flex flex1 modal-releve">
+                <div class="flex row releve-value important-background">
+                    <div class="releve-cmd releve-ch">ouverture chambre</div>
+                    <div class="releve-val"><strong>[nombre]</strong></div>
+                </div>
+                <div class="flex row releve-value important-background">
+                    <div class="releve-cmd releve-ch">clôture / fermeture chambre</div>
+                    <div class="releve-val">envoie les données recoltées vers NetSOINS</div>
+                </div>
+                <div class="flex row releve-value important-background">
+                    <div class="releve-cmd releve-ch">abandonner chambre en cours</div>
+                    <div class="releve-val">efface les données en cours sans envoi vers NetSOINS</div>
+                </div>
+                <div class="flex row releve-value">
+                    <div class="releve-cmd">tension artérielle</div>
+                    <div class="releve-val">
+                        <div>systole <strong>[nombre]</strong> diastole <strong>[nombre]</strong></div>
+                    </div>
+                </div>
+                <div class="flex row releve-value">
+                    <div class="releve-cmd">fréquence cardiaque</div>
+                    <div class="releve-val"><strong>[nombre]</strong></div>
+                </div>
+                <div class="flex row releve-value">
+                    <div class="releve-cmd">fréquence respiratoire</div>
+                    <div class="releve-val"><strong>[nombre]</strong></div>
+                </div>
+                <div class="flex row releve-value">
+                    <div class="releve-cmd">température</div>
+                    <div class="releve-val"><strong>[nombre]</strong> virgule <strong>[nombre]</strong></div>
+                </div>
+                <div class="flex row releve-value">
+                    <div class="releve-cmd">saturation</div>
+                    <div class="releve-val"><strong>[nombre]</strong> pour cent</div>
+                </div>
+                <div class="flex row releve-value">
+                    <div class="releve-cmd">commentaire</div>
+                    <div class="flex flex1 releve-val">
+                        <div>prononcer le mot"commentaire" permet de dicter du texte en lien avec la dernière valeur
+                        enregistrée. Ceci sera ajouté au relevé dans NetSOINS</div>
+                    </div>
+                </div>
+                <div class="flex row releve-value">
+                    <div class="releve-cmd">repas</div>
+                    <div class="flex flex1 releve-val">
+                        <div><strong>[petit dej - déjeuner - gouter - diner]</strong> quantité <strong>[rien - aucune - zero - non pris - un quart - un demi - moitié - trois quarts - tout]</strong></div>
+                    </div>
+                </div>
+                <div class="flex row releve-value">
+                    <div class="releve-cmd">hydratation</div>
+                    <div class="flex flex1 releve-val"><div><strong>[zero - un quart - un demi - trois quart - un - deux - trois - quatre - cinq]</strong> verres</div></div>
+                </div>
+                <div class="flex row releve-value">
+                    <div class="releve-cmd">dextro / glycémie</div>
+                    <div class="releve-val"><strong>[nombre]</strong> virgule <strong>[nombre]</strong></div>
+                </div>
+                <div class="flex row releve-value">
+                    <div class="releve-cmd">selles</div>
+                    <div class="flex flex1 releve-val">
+                        <div><strong>[liquide - molle - normale - dure - rien - zéro - aucune - traces]</strong>
+                        quantité <strong>[1 - 2 - 3]</strong>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex row releve-value">
+                    <div class="releve-cmd">urines (si continent)</div>
+                    <div class="releve-val"><strong>[zero - rien - peu - normal - beaucoup]</strong></div>
+                </div>
+                <div class="flex row releve-value">
+                    <div class="releve-cmd">protection (si incontinent)</div>
+                    <div class="releve-val"><strong>[sèche - humide - saturée ]</strong></div>
+                </div>
+                <div class="flex row releve-value">
+                    <div class="releve-cmd">poids</div>
+                    <div class="releve-val"><strong>[nombre]</strong> virgule <strong>[nombre]</strong> kilos</div>
+                </div>
+                <div class="flex row releve-value">
+                    <div class="releve-cmd">taille</div>
+                    <div class="releve-val">1 métre <strong>[nombre]</strong></div>
+                </div>
+            </div>
+            <div class="modal-validation flex raw"></div>
+        </div>
+    </div>
+    </div>
+
+    <div id="modal-transmission" class="flex col hidden scroll modal-list">
+        <div class="modal-container flex col">
+            <div class="modal-header">
+                <h2>La liste de transmissions possibles</h2>
+                <button id="modal-transmission-close" class="modal__close"><span class="icon"></span></button>
+            </div>
+            <p>Dictez selon ce modèle « transmission type <strong>chute</strong>»...attendez l'activation puis... « Donnée : le résident est tombé. Action : je l’ai relevé »</p>
+            <div class="modal-body flex flex1 col target-trans">
+                <div class="flex values row">
+                    <div class="flex col value">
+                        <div>libre</div>
+                        <div>entrée</div>
+                        <div>narrative</div>
+                        <div>céphalées</div>
+                        <div>chute</div>
+                        <div>grippe</div>
+                        <div>peur</div>
+                        <div>deuil</div>
+                        <div>sommeil</div>
+                        <div>plainte</div>
+                        <div>diarrhée</div>
+                        <div>douleurs</div>
+                        <div>escarres</div>
+                        <div>nausées</div>
+                    </div>
+                    <div class="flex col value">
+                        <div>infection</div>
+                        <div>hématome</div>
+                        <div>communication</div>
+                        <div>comportement</div>
+                        <div>constipation</div>
+                        <div>contention</div>
+                        <div>dénutrition</div>
+                        <div>déshydratation</div>
+                        <div>vomissements</div>
+                        <div>pansements</div>
+                        <div>hémorragie</div>
+                        <div>hypertension</div>
+                        <div>hyperthermie</div>
+                    </div>
+                    <div class="flex flex1 col value">
+                        <div>attitude défensive</div>
+                        <div>difficultés respiratoires</div>
+                        <div>événement indésirables</div>
+                        <div>incontinence urinaire</div>
+                        <div>info service</div>
+                        <div>soin fait en plus</div>
+                        <div>soin non fait</div>
+                        <div>traitement non dispensé</div>
+                        <div>traitement réfusé</div>
+                        <div>troubles alimentaires</div>
+                        <div>oedemes</div>
+                        <div>désorientation</div>
+                        <div>état cutané</div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-validation flex raw"></div>
+        </div>
+    </div>
+
+    <div id="modal-room-valider" class="flex col hidden scroll modal-data">
+        <div class="modal-container flex col">
+            <div class="modal-header">
+                <h2></h2>
+            </div>
+            <div class="modal-body flex col">
+            </div>
+            <div class="modal-validation flex raw">
+                <div id="modal-valider" class="modal__button valid">Valider</div>
+                <div id="modal-annuler" class="modal__button cancel">Annuler</div>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-editor" class="flex col hidden scroll modal-data">
+        <div class="modal-container flex col">
+            <div class="modal-validation"></div>
+            <div class="modal-body flex col">
+            </div>
+            <div class="modal-validation flex raw">
+                <div id="modal-editor-valider" class="modal__button valid">Valider</div>
+				<div id="modal-editor-supprimer" class="modal__button delete">Supprimer</div>
+                <div id="modal-editor-annuler" class="modal__button cancel">Annuler</div>		
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-history" class="flex col hidden scroll modal-data">
+        <div class="modal-container flex col">
+            <div class="modal-header">
+                <h2></h2>
+                <button id="modal-history-close" class="modal__close"><span class="icon"></span></button>
+            </div>
+            <div class="modal-body flex col history-room">
+            </div>
+            <div class="modal-validation flex raw"></div>
+        </div>
+    </div>
+    <!-- end modals -->
+
+</body>
+
+</html>
